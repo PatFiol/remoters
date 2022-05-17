@@ -1,0 +1,22 @@
+@startuml remoters search
+
+start
+
+:Enter Remoters;
+
+:Search;
+if (search talent);
+if(search job) then (country, city, neighbourhood)
+else (search talent)
+
+endif
+  :Result;
+
+
+
+
+
+
+stop
+
+@enduml

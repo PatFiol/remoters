@@ -1,0 +1,15 @@
+@startuml remoter profile
+
+
+actor "Remoter" as user
+
+
+usecase "Create profile" as UC1
+usecase "Search job" as UC2
+
+package "Profile" {
+  usecase "Create portfolio" as UC3
+
+  }
+
+@enduml
