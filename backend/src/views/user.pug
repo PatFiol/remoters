@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 #{user.name} (#{user.skills})
+  p Bio: #{user.bio}
+  h2 Portfolio (#{user.portfolio.length})
+
+  each portfolio in user.portfolio
+    h3 #{.title}
+    if portfolio.likedBy.length == 0
+      p no likes yet!
+    else
+      p #{portfolio.likedBy.map(user => user.name).join(', ')}

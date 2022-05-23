@@ -23,7 +23,7 @@ export default {
 <template lang="pug">
   .home
     h1 Remoters
-    h2 Keep it going and growing!
-    user-card
-    div(v-for="user in users") {{ user.name }} has {{ user.photos.length }} photos
+    user-card(v-for="user in users" :user="user")
+    // <button type="button" class="btn btn-primary"></button>
+    button.btn.btn-primary Click me
 </template>

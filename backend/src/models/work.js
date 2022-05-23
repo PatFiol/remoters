@@ -8,14 +8,16 @@ const workSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    unique: true,
+    unique: false,
   },
   description: {
     type: String,
   },
 })
 
-module.exports = Work
+workSchema.plugin(autopopulate)
+
+module.exports = mongoose.model('Work', workSchema)
 
 // Notification about formats
 // restriction on size and resolution

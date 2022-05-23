@@ -1,18 +1,9 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = new mongoose.Schema({
   name: {
-    type: String,
-    unique: true,
-    // required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    // required: true,
-  },
-  password: {
     type: String,
     unique: true,
     // required: true,
@@ -21,14 +12,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
-  bio: {
-    type: String,
-    // required: true,
-  },
-  skills: {
-    type: [],
-    // required: true,
-  },
+  bio: String,
+  skills: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Skills',
+      autopopulate: true,
+    },
+  ],
 })
 
 // A portfolio can be created adding photos or videos to it.
@@ -39,8 +30,11 @@ class User {
     await this.save()
   }
 
-  addSkills(skills) {
-    this.skills.push(skills)
+  async addSkills(skill) {
+    this.skills.push(skill)
+
+    await skill.save()
+    await this.save()
   }
 
   addPortfolio(portfolio) {
@@ -58,7 +52,9 @@ class User {
 }
 
 userSchema.loadClass(User)
-
 userSchema.plugin(autopopulate)
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email',
+})
 
 module.exports = mongoose.model('User', userSchema)

@@ -9,13 +9,14 @@ mongoose.set('debug', true)
 if (!connectionString) {
   connectionString = `mongodb+srv://${username}:${password}@cluster0.j9dcl.mongodb.net/${dbName}?retryWrites=true&w=majority`
 }
+mongoose.set('debug', true)
 
 mongoose
-
   .connect(connectionString, {
     useNewUrlParser: true,
-
     useUnifiedTopology: true,
   })
   .then(() => console.log('connection established'))
   .catch(console.log)
+
+module.exports = mongoose.connection
