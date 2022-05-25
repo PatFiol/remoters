@@ -2,21 +2,25 @@
 export default {
   name: 'UserCard',
   props: ['user'],
+  data() {
+    return {
+      defaultBio: 'This user has no bios.',
+    }
+  },
 }
 </script>
 
 <template lang="pug">
 .box
   h1 {{ user.name }}
-  p Bio: {{ user.bio }}
-  h2 Skills ({{ user.skills.length }})
+  p Bio: {{ user.bio || defaultBio}}
+  h2 Skills ({{ user.skills }})
 
-.portfolio(v-for="work in user.portfolio")
-  h3 {{ work.filename }}
+.portfolio(v-for="works in user.portfolio")
     p(v-if="!work.likedBy.length")
       | no likes yet
     p(v-else)
-      | {{ work.likedBy.map(user.name).join(', ') }}
+      | {{ work.likedBy.map(user => user.name).join(', ') }}
 </template>
 
 <style lang="scss" scoped>
