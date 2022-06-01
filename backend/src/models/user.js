@@ -5,21 +5,25 @@ const passportLocalMongoose = require('passport-local-mongoose')
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
     unique: true,
-    // required: true,
   },
   jobTitle: {
     type: String,
     // required: true,
   },
-  bio: String,
-  skills: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Skills',
-      autopopulate: true,
-    },
-  ],
+  // bio: String,
+  // skills: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Skills',
+  //     autopopulate: true,
+  //   },
+  // ],
 })
 
 // A portfolio can be created adding photos or videos to it.
