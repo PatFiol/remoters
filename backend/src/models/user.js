@@ -12,11 +12,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  jobTitle: {
-    type: String,
-    // required: true,
-  },
-  // bio: String,
+  // job: {
+  //   type: String,
+  //   required: true,
+  // },
+  bio: String,
+  city: String,
   // skills: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
@@ -29,20 +30,32 @@ const userSchema = new mongoose.Schema({
 // A portfolio can be created adding photos or videos to it.
 
 class User {
+  async addName (name) {
+    this.name = name
+    // await this.save()
+  }
+  async addJob(job) {
+    this.job = job
+    // await this.save()
+  }
+  async addCity(city) {
+    this.city = city
+    // await this.save()
+  }
   async addBio(bio) {
     this.bio = bio
-    await this.save()
+    // await this.save()
   }
-
   async addSkills(skill) {
     this.skills.push(skill)
 
-    await skill.save()
-    await this.save()
+    // await skill.save()
+    // await this.save()
   }
 
   addPortfolio(portfolio) {
     this.portfolios.push(portfolio)
+    // await this.save()
   }
 
   addConnection(connection) {

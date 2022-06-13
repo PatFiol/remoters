@@ -16,7 +16,7 @@ export default {
   p Bio: {{ user.bio || defaultBio}}
   h2 Skills ({{ user.skills }})
 
-.portfolio(v-for="works in user.portfolio")
+  .portfolio(v-for="works in user.portfolio")
     p(v-if="!work.likedBy.length")
       | no likes yet
     p(v-else)

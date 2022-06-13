@@ -8,6 +8,7 @@ const skillSchema = new mongoose.Schema({
   },
 })
 
+skillSchema.loadClass(skillSchema)
 skillSchema.plugin(autopopulate)
 
 module.exports = mongoose.model('Skill', skillSchema)
