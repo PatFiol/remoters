@@ -21,9 +21,9 @@ router.get('/', async (req, res) => {
   if (req.query.email) {
     query.email = req.query.email
   }
-  // if (req.query.job) {
-  //   query.job = req.query.job
-  // }
+  if (req.query.job) {
+    query.job = req.query.job
+  }
 
   res.send(await User.find(query))
 })
@@ -31,23 +31,27 @@ router.get('/', async (req, res) => {
 //Initialize SOME users
 router.get('/initialize', async (req, res) => {
   const patricia = await User.create({
-    name: 'patricia',
-    email: `patricia@sample.com`,
+    name: 'bionur',
+    email: `bionur@sample.com`,
+    job: 'full-stack developer',
   })
-  patricia.bio = "An amazing future software engineer who doesn't know yet how to code"
+
   const mihri = await User.create({
-    name: 'mihri',
-    email: `mihri@sample.com`,
+    name: 'jsmihri',
+    email: `jsmihri@sample.com`,
+    job: 'full-stack developer',
   })
 
   const armagan = await User.create({
-    name: 'armagan',
-    email: `armagan@sample.com`,
+    name: 'hharmagan',
+    email: `hharmagan@sample.com`,
+    job: 'software engineer',
   })
 
   const steve = await User.create({
-    name: 'steve',
-    email: `steve@sample.com`,
+    name: 'catsteve',
+    email: `catsteve@sample.com`,
+    job: 'backend developer',
   })
 
   patricia.setPassword('test')
@@ -58,9 +62,9 @@ router.get('/initialize', async (req, res) => {
   // const html = await Skill.create({ title: 'html' })
   // const css = await Skill.create({ title: 'css' })
 
-  // await steve.addSkill('javascript'.Skill)
-  // await patricia.addSkill('html'.Skill)
-  // await patricia.addSkill('css'.Skill)
+  await steve.addSkill('javascript')
+  await patricia.addSkill('html')
+  await patricia.addSkill('css')
 
   // await steve.addJob('back end developer')
   // await armagan.addJob('software engineer')
@@ -73,38 +77,48 @@ router.get('/initialize', async (req, res) => {
 })
 
 // get ALL users ('/' endpoint)
-router.get ('/:users', async (req, res) => {
-  const Users = await Users
+router.get('/', async (req, res) => {
+  const users = await User.find({})
+  res.send(users)
 })
 
 // GET ONE user (by Id)
 router.get('/:userId', async (req, res) => {
   const user = await User.findById(req.params.userId)
-
-  if (user) res.render('user', { user })
-  else res.sendStatus(404)
+  res.send(user)
 })
 
 // GET ONE user (by email)
-router.get('/:email', async (req, res) => {
-  const user = await User.findByEmail(req.params.email)
+router.get('/email/:email', async (req, res) => {
+  const { email } = req.params
 
-  if (user) res.render('email', { user })
-  else res.sendStatus(404)
+  res.send(await User.find({ email }))
 })
 
-// GET SOME users (by jobTitle)
-// router.get('/:jobTitle', async (req, res) => {
-//   const user = await User.findByJob(req.params.job)
+// GET SOME users (by job)
+router.get('/job/:job', async (req, res) => {
+  const { job } = req.params
 
-//   if (user) res.render('job', { user })
-//   else res.sendStatus(404)
-// })
+  res.send(await User.find({ job }))
+})
+
+// GET SOME users (by city)
+router.get('/city/:city', async (req, res) => {
+  const { city } = req.params
+
+  res.send(await User.find({ city }))
+})
 
 // GET SOME users (by skills)
-// router.get('/:skills', async (req, res) => {
-//   const skills = await Skill.findBySkills(req.params.skills)
-// })
+router.get('/skills/:skills', async (req, res) => {
+  // const { skill } = req.params
+
+  const skl = req.params
+  console.log(skl)
+  const users = await User.find({})
+  const searchedSkills = users.filter(user => user.skills.filter(skill => skill === skl.skills))
+  res.send(searchedSkills)
+})
 
 /* POST create a user */
 router.post('/', async (req, res) => {
@@ -129,24 +143,37 @@ router.post('/', async (req, res) => {
 //   res.sendStatus(200)
 // })
 
-
 /* DELETE */
+
 // Delete ALL users
-// router.deleteMany('/', async (req, res) => {
-//   await User.deleteMany({})
-//   res.send()
-// })
+router.delete('/', async function (req, res) {
+  await User.deleteMany()
 
-// // Delete ONE user by email
-// router.delete('/:email', async (req, res) => {
-//   User.delete(req.params.email)
-//   res.send()
-// })
+  res.sendStatus(200)
+})
 
-// // Delete ONE user
-// router.deleteOne('/:user', (req, res) => {
-//   User.deleteOne(req.params.user)
-//   res.send()
-// })
+// Delete ONE user by id
+router.delete('/:id', async function (req, res) {
+  await User.findByIdAndDelete(req.params.id)
+
+  res.sendStatus(200)
+})
+
+// Delete ONE user by email
+router.delete('/:email', async function (req, res) {
+  await User.find(req.params.email)
+
+  res.sendStatus(200)
+})
+
+// Update users
+router.patch('/:id', async function (req, res) {
+  const user = await User.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    email: req.body.email,
+  })
+
+  res.send(user)
+})
 
 module.exports = router

@@ -12,12 +12,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  // job: {
-  //   type: String,
-  //   required: true,
-  // },
+  job: {
+    type: String,
+    required: true,
+  },
   bio: String,
   city: String,
+  skills: Array,
   // skills: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
@@ -46,7 +47,7 @@ class User {
     this.bio = bio
     // await this.save()
   }
-  async addSkills(skill) {
+  async addSkill(skill) {
     this.skills.push(skill)
 
     // await skill.save()
