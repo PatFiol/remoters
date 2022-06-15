@@ -4,6 +4,8 @@ import UserList from '../views/user-list.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
 
+// import Home-view from '../views/home'
+
 Vue.use(VueRouter)
 
 export default function init(store) {

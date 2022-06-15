@@ -8,13 +8,17 @@ const workSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    unique: false,
   },
   description: {
     type: String,
   },
+  category: {
+    type: Array,
+    required: true
+  },
 })
 
+workSchema.loadClass(Work)
 workSchema.plugin(autopopulate)
 
 module.exports = mongoose.model('Work', workSchema)

@@ -19,6 +19,13 @@ const userSchema = new mongoose.Schema({
   bio: String,
   city: String,
   skills: Array,
+  portfolio: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Works',
+      autopopulate: true,
+    }
+  ]
   // skills: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
@@ -33,25 +40,25 @@ const userSchema = new mongoose.Schema({
 class User {
   async addName (name) {
     this.name = name
-    // await this.save()
+    await this.save()
   }
   async addJob(job) {
     this.job = job
-    // await this.save()
+    await this.save()
   }
   async addCity(city) {
     this.city = city
-    // await this.save()
+    await this.save()
   }
   async addBio(bio) {
     this.bio = bio
-    // await this.save()
+    await this.save()
   }
   async addSkill(skill) {
     this.skills.push(skill)
 
     // await skill.save()
-    // await this.save()
+    await this.save()
   }
 
   addPortfolio(portfolio) {

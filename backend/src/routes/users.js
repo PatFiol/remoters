@@ -1,32 +1,7 @@
-/* eslint-disable no-unused-vars */
 const express = require('express')
-
 const router = express.Router()
 
 const User = require('../models/user')
-// const Portfolio = require('../models/portfolio')
-// const Skill = require('../models/skill')
-// const Work = require('../models/work')
-
-/* GET users listing. */
-// eslint-disable-next-line no-unused-vars
-router.get('/', async (req, res) => {
-  const query = {}
-  if (req.query.name) {
-    query.name = req.query.name
-  }
-  if (req.query.skills) {
-    query.skill = req.query.skills
-  }
-  if (req.query.email) {
-    query.email = req.query.email
-  }
-  if (req.query.job) {
-    query.job = req.query.job
-  }
-
-  res.send(await User.find(query))
-})
 
 //Initialize SOME users
 router.get('/initialize', async (req, res) => {
@@ -82,6 +57,24 @@ router.get('/', async (req, res) => {
   res.send(users)
 })
 
+// router.get('/', async (req, res) => {
+//   const query = {}
+//   if (req.query.name) {
+//     query.name = req.query.name
+//   }
+//   if (req.query.skills) {
+//     query.skill = req.query.skills
+//   }
+//   if (req.query.email) {
+//     query.email = req.query.email
+//   }
+//   if (req.query.job) {
+//     query.job = req.query.job
+//   }
+
+//   res.send(await User.find(query))
+// })
+
 // GET ONE user (by Id)
 router.get('/:userId', async (req, res) => {
   const user = await User.findById(req.params.userId)
@@ -109,16 +102,30 @@ router.get('/city/:city', async (req, res) => {
   res.send(await User.find({ city }))
 })
 
+
 // GET SOME users (by skills)
 router.get('/skills/:skills', async (req, res) => {
-  // const { skill } = req.params
+  if (!req.params) return res.sendStatus(400)
 
   const skl = req.params
-  console.log(skl)
+
   const users = await User.find({})
-  const searchedSkills = users.filter(user => user.skills.filter(skill => skill === skl.skills))
-  res.send(searchedSkills)
+
+  const searchedSkills = users.filter((user, idx) => user.skills.includes(skl.skills))
+
+  // res.send(searchedSkills)
+  res.send(await User.find({ skills: req.params.skills }, {_id: 0, name: 1, skills: 1}))
 })
+
+
+/* Here is the 'pure mongodb' version:
+
+router.get('/skills/:skills', async (req, res) => {
+  if (!req.params) return res.sendStatus(400)
+
+  res.send(await User.find({ skills: req.params.skills }))
+}) */
+
 
 /* POST create a user */
 router.post('/', async (req, res) => {
