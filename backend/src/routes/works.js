@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const Work = require('../models/works')
+const Work = require('../models/work')
 
 router.get('/', async (req, res) => {
   const query = {}
@@ -11,9 +11,9 @@ router.get('/', async (req, res) => {
   if (req.query.type) {
     query.type = req.query.type
   }
-  if (req.query.city) {
-    query.city = req.query.city
-  }
+  // if (req.query.city) {
+  //   query.city = req.query.city
+  // }
 
   res.send(await Work.find(query))
 })

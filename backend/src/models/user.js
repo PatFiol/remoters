@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   portfolio: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Works',
+      ref: 'Work',
       autopopulate: true,
     }
   ]

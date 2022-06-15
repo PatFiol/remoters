@@ -18,7 +18,7 @@ const workSchema = new mongoose.Schema({
   },
 })
 
-workSchema.loadClass(Work)
+
 workSchema.plugin(autopopulate)
 
 module.exports = mongoose.model('Work', workSchema)
