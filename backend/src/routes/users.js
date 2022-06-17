@@ -29,6 +29,9 @@ router.get('/initialize', async (req, res) => {
     job: 'backend developer',
   })
 
+  steve.Bio = 'an old guy who feels young'
+  await steve.save()
+
   patricia.setPassword('test')
   armagan.setPassword('test')
   steve.setPassword('test')
@@ -44,9 +47,9 @@ router.get('/initialize', async (req, res) => {
   // await steve.addJob('back end developer')
   // await armagan.addJob('software engineer')
 
-  await armagan.save()
-  await patricia.save()
-  await steve.save()
+  // await armagan.save()
+  // await patricia.save()
+  // await steve.save()
 
   res.sendStatus(200)
 })
@@ -102,6 +105,13 @@ router.get('/city/:city', async (req, res) => {
   res.send(await User.find({ city }))
 })
 
+
+// GET SOME users (by name)
+router.get('/name/:name', async (req, res) => {
+  const { name } = req.params
+
+  res.send(await User.find({ name }))
+})
 
 // GET SOME users (by skills)
 router.get('/skills/:skills', async (req, res) => {
