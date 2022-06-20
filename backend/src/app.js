@@ -12,7 +12,7 @@ const cors = require('cors')
 const User = require('./models/user')
 const Work = require('./models/work')
 const Portfolio = require('./models/portfolio')
-// const Skill = require('./models/skill')
+
 
 require('./database-connection')
 
@@ -23,7 +23,7 @@ const usersRouter = require('./routes/users')
 const portfoliosRouter = require('./routes/portfolios')
 const worksRouter = require('./routes/works')
 const accountRouter = require('./routes/account')
-// const skillsRouter = require('./routes/skill')
+
 
 const app = express()
 
@@ -88,7 +88,6 @@ app.use('/api/', indexRouter)
 app.use('/api/account', accountRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/portfolios', portfoliosRouter)
-// app.use('/api/skils', skillsRouter)
 app.use('/api/works', worksRouter)
 
 // catch 404 and forward to error handler

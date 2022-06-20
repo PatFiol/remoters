@@ -13,14 +13,11 @@ export default {
 <template lang="pug">
 .box
   h1 {{ user.name }}
-  p Bio: {{ user.bio || defaultBio}}
+  h2 jobTitle
   h2 Skills ({{ user.skills }})
+  p Bio: {{ user.bio || defaultBio}}
 
-  .portfolio(v-for="works in user.portfolio")
-    p(v-if="!work.likedBy.length")
-      | no likes yet
-    p(v-else)
-      | {{ work.likedBy.map(user => user.name).join(', ') }}
+
 </template>
 
 <style lang="scss" scoped>

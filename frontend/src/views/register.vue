@@ -7,6 +7,7 @@ export default {
   data() {
     return {
       name: '',
+      jobTitle: '',
       skills: [],
       email: '',
       password: '',

@@ -8,25 +8,25 @@ router.get('/initialize', async (req, res) => {
   const patricia = await User.create({
     name: 'bionur',
     email: `bionur@sample.com`,
-    job: 'full-stack developer',
+    jobTitle: 'full-stack developer',
   })
 
   const mihri = await User.create({
     name: 'jsmihri',
     email: `jsmihri@sample.com`,
-    job: 'full-stack developer',
+    jobTitle: 'full-stack developer',
   })
 
   const armagan = await User.create({
     name: 'hharmagan',
     email: `hharmagan@sample.com`,
-    job: 'software engineer',
+    jobTitle: 'software engineer',
   })
 
   const steve = await User.create({
     name: 'catsteve',
     email: `catsteve@sample.com`,
-    job: 'backend developer',
+    jobTitle: 'backend developer',
   })
 
   steve.Bio = 'an old guy who feels young'
@@ -44,8 +44,8 @@ router.get('/initialize', async (req, res) => {
   await patricia.addSkill('html')
   await patricia.addSkill('css')
 
-  // await steve.addJob('back end developer')
-  // await armagan.addJob('software engineer')
+  // await steve.addjobTitle('back end developer')
+  // await armagan.addjobTitle('software engineer')
 
   // await armagan.save()
   // await patricia.save()
@@ -71,8 +71,8 @@ router.get('/', async (req, res) => {
 //   if (req.query.email) {
 //     query.email = req.query.email
 //   }
-//   if (req.query.job) {
-//     query.job = req.query.job
+//   if (req.query.jobTitle) {
+//     query.jobTitle = req.query.jobTitle
 //   }
 
 //   res.send(await User.find(query))
@@ -91,11 +91,11 @@ router.get('/email/:email', async (req, res) => {
   res.send(await User.find({ email }))
 })
 
-// GET SOME users (by job)
-router.get('/job/:job', async (req, res) => {
-  const { job } = req.params
+// GET SOME users (by jobTitle)
+router.get('/jobTitle/:jobTitle', async (req, res) => {
+  const { jobTitle } = req.params
 
-  res.send(await User.find({ job }))
+  res.send(await User.find({ jobTitle }))
 })
 
 // GET SOME users (by city)
@@ -104,7 +104,6 @@ router.get('/city/:city', async (req, res) => {
 
   res.send(await User.find({ city }))
 })
-
 
 // GET SOME users (by name)
 router.get('/name/:name', async (req, res) => {
@@ -124,9 +123,8 @@ router.get('/skills/:skills', async (req, res) => {
   const searchedSkills = users.filter((user, idx) => user.skills.includes(skl.skills))
 
   // res.send(searchedSkills)
-  res.send(await User.find({ skills: req.params.skills }, {_id: 0, name: 1, skills: 1}))
+  res.send(await User.find({ skills: req.params.skills }, { _id: 0, name: 1, skills: 1 }))
 })
-
 
 /* Here is the 'pure mongodb' version:
 
@@ -135,7 +133,6 @@ router.get('/skills/:skills', async (req, res) => {
 
   res.send(await User.find({ skills: req.params.skills }))
 }) */
-
 
 /* POST create a user */
 router.post('/', async (req, res) => {

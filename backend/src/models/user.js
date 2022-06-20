@@ -12,11 +12,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
-    lowercase: true
+    lowercase: true,
   },
-  job: {
+  jobTitle: {
     type: String,
-
   },
   bio: String,
   city: String,
@@ -26,18 +25,17 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Work',
       autopopulate: true,
-    }
-  ]
+    },
+  ],
 })
 
-
 class User {
-  async addName (name) {
+  async addName(name) {
     this.name = name
     await this.save()
   }
-  async addJob(job) {
-    this.job = job
+  async addjobTitle(jobTitle) {
+    this.jobTitle = jobTitle
     await this.save()
   }
   async addCity(city) {
